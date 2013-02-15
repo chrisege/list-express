@@ -46,10 +46,11 @@ var Item = new mongoose.Schema({
 //Models
 var ItemModel = mongoose.model('Item', Item);
 
-//Get a list of all books
+//Get a list of all items
 app.get('/api/items', function (req, res) {
     return ItemModel.find(function (err, items) {
         if (!err) {
+			console.log('items: '+items.length);
             return res.send(items);
         } else {
             return console.log(err);
@@ -57,11 +58,11 @@ app.get('/api/items', function (req, res) {
     });
 });
 
-//Insert a new book
+//Insert a new item
 app.post('/api/items', function (req, res) {
     var item = new ItemModel({
         title:req.body.title,
-        status:req.body.status,
+        completed:req.body.completed,
         category:req.body.category
     });
     item.save(function (err) {
@@ -72,6 +73,38 @@ app.post('/api/items', function (req, res) {
         }
     });
     return res.send(item);
+});
+
+//Update an item
+app.put('/api/items/:id', function(req, res){
+	console.log('Updating item ' + req.title);
+	return ItemModel.findById(req.params.id, function(err, item){
+		item.title = req.body.title;
+		item.completed = req.body.completed;
+		item.category = req.body.category;
+		return item.save(function(err){
+			if (!err){
+				console.log('item updated');
+			} else {
+				console.log(err);
+			}
+			return res.send(item)
+		});
+	  });
+});
+
+app.delete('/api/items/:id', function(req, res){
+	console.log('Deleting item ' + req.title);
+	return ItemModel.findById(req.params.id, function(err, item){
+		return item.remove(function(err){
+			if (!err){
+				console.log('item deleted');
+			} else {
+				console.log(err);
+			}
+			return res.send(item)
+		});
+	});
 });
 
 http.createServer(app).listen(app.get('port'), function(){

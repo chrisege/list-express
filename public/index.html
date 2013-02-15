@@ -7,22 +7,26 @@
 		    <tr>
 				<td><input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>></td>
 		    	<td><p class="title"><%= title %></p></td>
+				<td><button class="delete">delete</button></td>
 			</tr>
 		</script>
 		<script src="/javascripts/vendor/zepto.min.js"></script>
 		<script src="/javascripts/vendor/lodash.min.js"></script>
-		<script src="/javascripts/vendor/backbone-min.js"></script>
+		<script src="/javascripts/vendor/backbone.js"></script>
+		<script src="/javascripts/models/item.js"></script>
+		<script src="/javascripts/collections/items.js"></script>
+		<script src="/javascripts/views/item.js"></script>
+		<script src="/javascripts/views/app.js"></script>
 		<script src="/javascripts/list-express.js"></script>
 
 	</head>
 	<body>
-		<h1>Express</h1>
-		<p>Mostly just work in the console for now.</p>
-		<div>
-			<table id="itemContainer">
+		<div id="listExpress">
+			<div id="main">
+				<table id="itemContainer">
 			
-			</table>
+				</table>
+			</div>
 		</div>
-		
 	</body>
 </html>
