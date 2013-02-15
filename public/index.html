@@ -7,26 +7,32 @@
 		    <tr>
 				<td><input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>></td>
 		    	<td><p class="title"><%= title %></p></td>
+				<td><p class="category"><%= category %></p></td>
 				<td><button class="delete">delete</button></td>
 			</tr>
 		</script>
-		<script src="/javascripts/vendor/zepto.min.js"></script>
-		<script src="/javascripts/vendor/lodash.min.js"></script>
-		<script src="/javascripts/vendor/backbone.js"></script>
-		<script src="/javascripts/models/item.js"></script>
-		<script src="/javascripts/collections/items.js"></script>
-		<script src="/javascripts/views/item.js"></script>
-		<script src="/javascripts/views/app.js"></script>
-		<script src="/javascripts/list-express.js"></script>
+
 
 	</head>
 	<body>
 		<div id="listExpress">
+			<div id="newItemForm">
+				<p>New item:</p>
+				<input id="newItemTitle" placeholder="Title"/>
+				<input id="newItemCategory" placeholder="Category" />
+				<button id="newItemSave">Save</button>
+			</div>
 			<div id="main">
-				<table id="itemContainer">
-			
-				</table>
+				<table id="itemContainer"></table>
 			</div>
 		</div>
+	<script src="/javascripts/vendor/zepto.min.js"></script>
+	<script src="/javascripts/vendor/lodash.min.js"></script>
+	<script src="/javascripts/vendor/backbone.js"></script>
+	<script src="/javascripts/models/item.js"></script>
+	<script src="/javascripts/collections/items.js"></script>
+	<script src="/javascripts/views/item.js"></script>
+	<script src="/javascripts/views/app.js"></script>
+	<script src="/javascripts/list-express.js"></script>
 	</body>
 </html>
