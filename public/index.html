@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+		<title>Express</title>
+		<link rel="stylesheet" href="/stylesheets/style.css">
+		<script type="text/template" id="itemTemplate">
+		    <tr>
+				<td><input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>></td>
+		    	<td><p class="title"><%= title %></p></td>
+			</tr>
+		</script>
+		<script src="/javascripts/vendor/zepto.min.js"></script>
+		<script src="/javascripts/vendor/lodash.min.js"></script>
+		<script src="/javascripts/vendor/backbone-min.js"></script>
+		<script src="/javascripts/list-express.js"></script>
+
+	</head>
+	<body>
+		<h1>Express</h1>
+		<p>Mostly just work in the console for now.</p>
+		<div>
+			<table id="itemContainer">
+			
+			</table>
+		</div>
+		
+	</body>
+</html>
