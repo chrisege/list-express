@@ -15,14 +15,14 @@ listExpress.ItemView = Backbone.View.extend({
 	},
 	
 	toggleCompleted: function(){
-		console.log(this.model);
+		//console.log(this.model);
 		this.model.toggle();
 	},
 	
 	clear: function(){
 		this.model.destroy({
 			success: function() {
-                console.log("delete was a success");
+				
             }
 		});
 	},
