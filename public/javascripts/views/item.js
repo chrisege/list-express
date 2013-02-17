@@ -1,7 +1,6 @@
 var listExpress = listExpress || {};
 
 listExpress.ItemView = Backbone.View.extend({
-	//el:"#itemContainer",
 	tagName: 'tr',
 	template: $("#itemTemplate").html(),
 	

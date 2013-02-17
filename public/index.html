@@ -4,12 +4,18 @@
 		<title>Express</title>
 		<link rel="stylesheet" href="/stylesheets/style.css">
 		<script type="text/template" id="itemTemplate">
-		    <tr>
+
 				<td><input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>></td>
 		    	<td><p class="title"><%= title %></p></td>
-				<td><p class="category"><%= category %></p></td>
 				<td><button class="delete">delete</button></td>
-			</tr>
+
+		</script>
+		<script type="text/template" id="headingTemplate">
+		    <table id="<%= category %>">
+				<tr>
+				<td colspan=4><%= category %></td>
+				</tr>
+			</table>
 		</script>
 
 
@@ -23,7 +29,7 @@
 				<button id="newItemSave">Save</button>
 			</div>
 			<div id="main">
-				<table id="itemContainer"></table>
+				<div id="itemContainer"></table>
 			</div>
 		</div>
 	<script src="/javascripts/vendor/zepto.min.js"></script>

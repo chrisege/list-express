@@ -26,6 +26,12 @@ var ItemList = Backbone.Collection.extend({
 		});
 	},
 	
+	filterByCategory: function(category){
+		return this.filter(function(item){
+			return item.get('category') === category;
+		});
+	},
+	
 });
 
 listExpress.Items = new ItemList();
