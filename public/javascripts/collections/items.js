@@ -2,7 +2,15 @@ var listExpress = listExpress || {};
 
 var ItemList = Backbone.Collection.extend({
 	model: listExpress.Item,
-	url: '/api/items',
+	url: function(){
+		return this.url;
+	},
+	
+	initialize: function(models, options){
+		console.log(options.url);
+		//this.url = options.url || '/api/items';
+		this.url = '/api/items';
+	},
 	
 	completed: function(){
 		return this.filter(function(item){

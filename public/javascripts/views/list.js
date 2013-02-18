@@ -2,14 +2,17 @@ var listExpress = listExpress || {};
 
 listExpress.ListView = Backbone.View.extend({
 	el: "#listExpress",
-	collection: listExpress.Items,
-	initialize: function(){
+	initialize: function(models, options){
+		this.id = options.id;
 		this.input = this.$('#newItemForm');
 		this.categories = this.getCategories();
 		window.listExpress.Items.on('reset', this.renderCategoryCollections, this);
 		window.listExpress.Items.on('add', this.addOne, this);
+		this.collection = new ItemList([], {url: '/api/list/'+this.id+"/items"});
 		this.collection.fetch();
 	},
+	
+	collection: new ItemList([], {url: '/api/list/'+this.id+"/items"}),
 	
 	render: function(){
 		var completed = this.collection.completed().length;
@@ -87,11 +90,13 @@ listExpress.ListView = Backbone.View.extend({
       return {
         title: $(this.input).children('#newItemTitle').val().trim(),
 	    category: this.input.children("#newItemCategory").val().trim(),
+		listId: this.id,
         completed: false
       };
     },
 	
 	create: function(){
+		console.log('create');
 		this.collection.create(this.newAttributes());
 		this.input.children('input').val('');
 		//this.collection.reset();

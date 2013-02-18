@@ -97,7 +97,7 @@ app.put('/api/lists/:id', function(req, res) {
 app.get('/api/lists/:id/items', function(req,res) {
 	return ItemModel.find({listId: req.body.id}, function(err,items) {
 		if (!err) {
-			console.log('list items: '+items.length);
+			console.log(req.body.id+ ' list items: '+items.length);
 			return res.send(items);
 		} else {
 			return console.log(err);
