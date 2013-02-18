@@ -4,15 +4,15 @@ listExpress.ListView = Backbone.View.extend({
 	el: "#listExpress",
 	initialize: function(models, options){
 		this.id = options.id;
+		console.log(this.id)
 		this.input = this.$('#newItemForm');
-		this.categories = this.getCategories();
-		window.listExpress.Items.on('reset', this.renderCategoryCollections, this);
-		window.listExpress.Items.on('add', this.addOne, this);
-		this.collection = new ItemList([], {url: '/api/list/'+this.id+"/items"});
+		this.collection = new ItemList([], {id: this.id});
+		this.collection.on('reset', this.renderAll, this);
 		this.collection.fetch();
+		console.log(this.collection);
 	},
 	
-	collection: new ItemList([], {url: '/api/list/'+this.id+"/items"}),
+	//collection: new ItemList([], {id: this.id}),
 	
 	render: function(){
 		var completed = this.collection.completed().length;
