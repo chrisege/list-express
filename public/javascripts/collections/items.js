@@ -7,8 +7,9 @@ var ItemList = Backbone.Collection.extend({
 	},
 	
 	initialize: function(models, options){
-		this.id = options.id;
-		console.log(options.id);
+		if (options) {
+			this.id = options.id || "";			
+		}
 		//this.url = '/api/items';
 	},
 	

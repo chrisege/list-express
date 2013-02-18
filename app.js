@@ -95,14 +95,31 @@ app.put('/api/lists/:id', function(req, res) {
 });
 
 app.get('/api/lists/:id/items', function(req,res) {
-	return ItemModel.find({listId: req.body.id}, function(err,items) {
+	return ItemModel.find({listId: req.params.id}, function(err,items) {
 		if (!err) {
-			console.log(req.body.id+ ' list items: '+items.length);
+			console.log(req.params.id+ ' list items: '+items.length);
 			return res.send(items);
 		} else {
 			return console.log(err);
 		}
 	});
+});
+
+app.post('/api/lists/:id/items', function(req,res) { 
+	var item = new ItemModel({
+		title:req.body.title,
+        completed:req.body.completed,
+        category:req.body.category,
+		listId:req.params.id
+	});
+	item.save(function (err) {
+        if (!err) {
+            return console.log('created');
+        } else {
+            return console.log(err);
+        }
+    });
+    return res.send(item);
 });
 
 app.get('/api/items', function (req, res) {
