@@ -122,6 +122,42 @@ app.post('/api/lists/:id/items', function(req,res) {
     return res.send(item);
 });
 
+//Update an item
+//currently doesn't check to make sure listId matches. does that matter?
+app.put('/api/lists/:listId/items/:itemId', function(req, res){
+	console.log('Updating item ' + req.title);
+	return ItemModel.findById(req.params.itemId, function(err, item){
+		item.title = req.body.title;
+		item.completed = req.body.completed;
+		item.category = req.body.category;
+		return item.save(function(err){
+			if (!err){
+				console.log('item updated');
+			} else {
+				console.log(err);
+			}
+			return res.send(item)
+		});
+	  });
+});
+
+//delete an item
+//currently doesn't check to make sure listId matches. does that matter?
+app.delete('/api/lists/:listId/items/:itemId', function(req, res){
+	console.log('Deleting item ' + req.title);
+	return ItemModel.findById(req.params.itemId, function(err, item){
+		return item.remove(function(err){
+			if (!err){
+				console.log('item deleted');
+			} else {
+				console.log(err);
+			}
+			return res.send(item)
+		});
+	});
+});
+
+
 app.get('/api/items', function (req, res) {
     return ItemModel.find(function (err, items) {
         if (!err) {

@@ -2,21 +2,26 @@ var listExpress = listExpress || {};
 
 listExpress.ListView = Backbone.View.extend({
 	el: "#listExpress",
+	tagName: 'div',
 	initialize: function(models, options){
 		this.id = options.id;
-		//console.log(this.id)
-		this.input = this.$('#newItemForm');
+		console.log(options.id);
+
 		this.collection = new ItemList([], {id: this.id});
+		this.collection.on('reset', this.render, this);
 		this.collection.on('reset', this.renderCategoryCollections, this);
 		this.collection.on('add', this.addOne, this);
 		this.collection.fetch();
+		this.categoryCollections = [];
+		this.input = $('#newItemForm');
+		console.log(this.input);
 		//console.log(this.collection);
 	},
-	
-	//collection: new ItemList([], {id: this.id}),
-	
+		
 	render: function(){
 		var completed = this.collection.completed().length;
+		var tmpl = _.template($("#listDisplayTemplate").html());
+		this.$el.append(tmpl(this.collection));
 	},
 	
 	events: {
@@ -38,6 +43,7 @@ listExpress.ListView = Backbone.View.extend({
 			//strip out spaces from category name here too
 			categoryCollection.name = category;
 			categoryCollections.push(categoryCollection);
+			that.categoryCollections.push(categoryCollection);
 		});
 		return categoryCollections;
 	
@@ -95,9 +101,10 @@ listExpress.ListView = Backbone.View.extend({
 	},
 	
 	newAttributes: function() {
+		console.log($('#newItemTitle').val());
       return {
-        title: $(this.input).children('#newItemTitle').val().trim(),
-	    category: this.input.children("#newItemCategory").val().trim(),
+        title: $('#newItemTitle').val().trim(),
+	    category: $("#newItemCategory").val().trim(),
 		listId: this.id,
         completed: false
       };
@@ -108,6 +115,18 @@ listExpress.ListView = Backbone.View.extend({
 		this.collection.create(this.newAttributes());
 		//this.input.children('input').val('');
 		//this.collection.reset();
+	},
+	
+	close: function(){
+		this.$el.html('');
+		this.undelegateEvents();
+		this.collection.remove();
+		this.collection.unbind();
+		_.each(this.categoryCollections, function(collection){
+			collection.remove();
+			collection.unbind();
+		});
+		this.unbind();
 	},
 	
 });

@@ -6,19 +6,32 @@ var listExpress = listExpress || {};
 // Since we don't have users yet, it just shows all lists.
 
 listExpress.UserView = Backbone.View.extend({
-	el: "toBeDetermined",
+	el: "#listingContainer",
 	
 	// change this to pull a given user's lists
 	// once users are built.
 	collection: listExpress.Lists,
+	template: $("#listingTemplate").html(),
+	events: {
+		'click .listLink': 'renderSelectedList',
+	},
 	
 	initialize: function(){
 		this.collection.fetch();
+		this.collection.on('reset', this.renderAll, this);
 		this.collection.on('reset', this.renderSelectedList, this);
-		// this.selected = this.collection.at(1);
-		// console.log(this.collection);
-		// console.log(this.collection.length);
+		this.subViews = [];
 	},
+	
+	renderAll: function(){
+		var that = this;
+		this.tmpl = _.template(this.template);
+		_.each(this.collection.models, function(item){
+			that.$el.append(that.tmpl(item.toJSON()));
+		});
+	},
+	
+	
 	
 	getSelectedId: function(){
 		this.selected = this.collection.at(1);
@@ -26,10 +39,22 @@ listExpress.UserView = Backbone.View.extend({
 		return this.selected.id;
 	},
 	
-	renderSelectedList: function(){
-		var selectedID = this.getSelectedId();
-		//console.log(selectedID);
-		new listExpress.ListView([], {id: selectedID});
+	renderSelectedList: function(e){
+		this.emptySubViews();
+		this.subViews = [];
+		var selectedID = $(e.currentTarget.id);
+		selectedID = selectedID.selector;
+		var listView = new listExpress.ListView([], {id: selectedID});
+		this.subViews.push(listView);
+		console.log(this.subViews);
+	},
+	
+	emptySubViews: function(){
+		_.each(this.subViews, function(subView){
+			// subView.unbind();
+			// subView.remove();
+			subView.close();
+		});
 	},
 	
 
