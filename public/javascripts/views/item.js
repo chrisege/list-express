@@ -26,6 +26,11 @@ listExpress.ItemView = Backbone.View.extend({
 		});
 	},
 	
+	close: function(){
+		this.remove();
+		this.unbind();
+	},
+	
 	render: function(){
 		var tmpl = _.template(this.template);
 		this.$el.append(tmpl(this.model.toJSON()));

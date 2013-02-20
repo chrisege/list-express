@@ -46,7 +46,7 @@ listExpress.UserView = Backbone.View.extend({
 		selectedID = selectedID.selector;
 		var listView = new listExpress.ListView([], {id: selectedID});
 		this.subViews.push(listView);
-		console.log(this.subViews);
+		//console.log(this.subViews);
 	},
 	
 	emptySubViews: function(){
