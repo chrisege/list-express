@@ -1,5 +1,8 @@
 var listExpress = listExpress || {};
 
+
+// awful name, right? this collection is a list of lists.
+
 var ListList = Backbone.Collection.extend({
 	model: listExpress.List,
 	url: '/api/lists/',

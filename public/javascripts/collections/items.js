@@ -3,7 +3,10 @@ var listExpress = listExpress || {};
 var ItemList = Backbone.Collection.extend({
 	model: listExpress.Item,
 	url: function(){
-		return "/api/lists/"+this.id+"/items";
+		if (this.id) {
+			return "/api/lists/"+this.id+"/items";
+		}
+		
 	},
 	
 	initialize: function(models, options){

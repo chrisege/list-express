@@ -5,9 +5,14 @@ listExpress.ListView = Backbone.View.extend({
 	tagName: 'div',
 	model: listExpress.List,
 	initialize: function(models, options){
-		this.id = options.id;
+		if (options) {
+			this.id = options.id;
+		} 
 		this.collection = new ItemList([], {id: this.id});
-		this.collection.on('reset', this.render, this);
+		
+		this.listenTo(this.collection, 'reset', this.render);
+		
+		//this.collection.on('reset', this.render, this);
 		//this.collection.on('reset', this.renderAllGrouped, this);
 		this.collection.on('add', this.addOne, this);
 		this.collection.fetch();
@@ -15,7 +20,12 @@ listExpress.ListView = Backbone.View.extend({
 
 	},
 		
+	testFunction: function(){
+		console.log('testFunction');
+	},
+	
 	render: function(){
+		// console.log('render');
 		var completed = this.collection.completed().length;
 		var tmpl = _.template($("#listDisplayTemplate").html());
 		this.$el.append(tmpl(this.collection));
@@ -90,10 +100,11 @@ listExpress.ListView = Backbone.View.extend({
 	},
 	
 	close: function(){
-		this.$el.html('');
+		// this.$el.html('');
 		this.unbind();
-		this.collection.remove();
-		this.collection.off('add', this.addOne);
+		//this.collection.remove();
+		this.remove();
+		console.log('closed');
 	},
 	
 });
