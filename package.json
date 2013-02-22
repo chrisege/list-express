@@ -13,6 +13,8 @@
 	"path": "*",
 	"zepto": "*",
 	"lodash": "*",
-	"backbone": "*"
+	"backbone": "*",
+	"piler": "*",
+	"consolidate": "*"
   }
 }

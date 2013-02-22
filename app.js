@@ -4,6 +4,8 @@
  */
 
 var express = require('express')
+  , piler = require('piler')
+  , cons = require('consolidate')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
@@ -12,10 +14,21 @@ var express = require('express')
 
 var app = express();
 
+var piler = require("piler");
+var clientjs = piler.createJSManager();
+var clientcss = piler.createCSSManager();
+
 app.configure(function(){
+  clientjs.bind(app);
+  clientcss.bind(app);
+
+  clientcss.addFile(__dirname + "/public/stylesheets/style.css");  
+  app.engine('html', cons.handlebars);
+
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
+  app.set('view engine', 'html');
+
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
