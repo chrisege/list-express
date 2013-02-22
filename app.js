@@ -27,7 +27,7 @@ app.configure(function(){
 
   app.clientcss.addFile(__dirname + "/public/stylesheets/style.css");
   app.clientjs.addFile(__dirname + "/node_modules/zepto/zepto.min.js");
-  app.clientjs.addFile(__dirname + "/node_modules/lodash/lodash.min.js");
+  app.clientjs.addFile(__dirname + "/node_modules/lodash/lodash.js");
   app.clientjs.addFile(__dirname + "/node_modules/backbone/backbone.js"); //switch to min at some point
 
 
