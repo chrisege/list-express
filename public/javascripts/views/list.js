@@ -1,22 +1,18 @@
 var listExpress = listExpress || {};
 
 listExpress.ListView = Backbone.View.extend({
-	el: "#listExpress",
+	el: "#listExpress div",
 	tagName: 'div',
 	model: listExpress.List,
 	initialize: function(models, options){
 		if (options) {
 			this.id = options.id;
 		} 
-		this.collection = new ItemList([], {id: this.id});
-		
+		this.collection = listExpress.itemList;
 		this.listenTo(this.collection, 'reset', this.render);
-		
-		//this.collection.on('reset', this.render, this);
-		//this.collection.on('reset', this.renderAllGrouped, this);
-		this.collection.on('add', this.addOne, this);
-		this.collection.fetch();
+		this.listenTo(this.collection, 'add', this.addOne);
 		this.input = $('#newItemForm');
+		this.subviews = []
 
 	},
 		
@@ -25,10 +21,7 @@ listExpress.ListView = Backbone.View.extend({
 	},
 	
 	render: function(){
-		// console.log('render');
 		var completed = this.collection.completed().length;
-		var tmpl = _.template($("#listDisplayTemplate").html());
-		this.$el.append(tmpl(this.collection));
 		this.renderAllGrouped();
 	},
 	
@@ -36,11 +29,23 @@ listExpress.ListView = Backbone.View.extend({
 		'click #newItemSave': 'create',
 	},
 	
-	renderCollection: function(collection, name){
+	renderAllGrouped: function(){
 		var that = this;
+		$('#itemContainer').html('');
+		_.each(this.collection.groupByCategory(), function(value, key){
+			that.renderCollectionHeading(value, key);
+			that.renderCollection(value, key);
+		});
+	},
+	
+	renderCollectionHeading: function(collection, name){
 		var tmpl = _.template($('#headingTemplate').html());
 			tmpl = tmpl({category: name});
-		this.$('#itemContainer').append(tmpl);
+		$('#itemContainer').append(tmpl);
+	},
+	
+	renderCollection: function(collection, name){
+		var that = this;
 		_.each(collection, function(item){
 			that.addOne(item);
 		}, this);
@@ -57,7 +62,8 @@ listExpress.ListView = Backbone.View.extend({
 		var itemView = new listExpress.ItemView({
 			model:item
 		});
-
+		this.subviews.push(itemView);
+		
 		var el = $("#"+item.attributes.category);
 		if (el.length > 0) {
 			el.append(itemView.render().el);
@@ -68,6 +74,7 @@ listExpress.ListView = Backbone.View.extend({
 	
 	
 	renderAll: function(){
+		console.log(this.collection);
 		var that = this;
 		this.$('#itemContainer').html('');
 		_.each(this.collection.models, function(item){
@@ -75,13 +82,7 @@ listExpress.ListView = Backbone.View.extend({
 		}, this);
 	},
 	
-	renderAllGrouped: function(){
-		var that = this;
-		this.$('#itemContainer').html('');
-		_.each(this.collection.groupByCategory(), function(value, key){
-			that.renderCollection(value, key);
-		});
-	},
+
 	
 	newAttributes: function() {
       return {
@@ -93,18 +94,15 @@ listExpress.ListView = Backbone.View.extend({
     },
 	
 	create: function(){
-		console.log('create');
 		this.collection.create(this.newAttributes());
-		//this.input.children('input').val('');
-		//this.collection.reset();
 	},
 	
 	close: function(){
-		// this.$el.html('');
+		_.each(this.subviews, function(subview){
+			subview.close();
+		});
 		this.unbind();
-		//this.collection.remove();
 		this.remove();
-		console.log('closed');
 	},
 	
 });

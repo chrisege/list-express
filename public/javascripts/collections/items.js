@@ -47,4 +47,4 @@ var ItemList = Backbone.Collection.extend({
 	
 });
 
-//listExpress.Items = new ItemList();
+listExpress.itemList = new ItemList();

@@ -41,21 +41,17 @@ listExpress.UserView = Backbone.View.extend({
 	},
 	
 	renderSelectedList: function(e){
-		this.emptySubViews();
-		this.subViews = [];
 		var selectedID = $(e.currentTarget.id);
 		selectedID = selectedID.selector;
 		if (this.listView) {
 			this.listView.close();
 			this.listView.remove();
-		}
-		console.log(this.listView);
-		
+		}		
+		var tmpl = _.template($("#listDisplayTemplate").html());
+		$("#listExpress").append(tmpl());
+		listExpress.itemList.url = "/api/lists/"+selectedID+"/items";
+		listExpress.itemList.fetch()
 		this.listView = new listExpress.ListView([], {id: selectedID});
-		//console.log(window.listExpress.itemList);
-		//listExpress.itemlist = new listExpress.ListView([], {id: selectedID});
-		//this.subViews.push(listView);
-		//console.log(this.subViews);
 	},
 	
 	emptySubViews: function(){
