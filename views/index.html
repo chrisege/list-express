@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+		<title>{{title}}</title>
+		{{{css}}}
+		<script type="text/template" id="itemTemplate">
+				<td><input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>></td>
+		    	<td><p class="title"><%= title %></p></td>
+				<td><button class="delete">delete</button></td>
+		</script>
+		<script type="text/template" id="headingTemplate">
+		    <table id="<%= category %>">
+				<tr>
+				<td colspan=4><%= category %></td>
+				</tr>
+			</table>
+		</script>
+		<script type="text/template" id="listingTemplate">
+			<p><a href="#" id="<%= _id %>" class="listLink"><%= title %></a></p>
+		</script>
+		<script type="text/template" id="listDisplayTemplate">
+			<div id="newItemForm">
+				<p>New item:</p>
+				<input id="newItemTitle" placeholder="Title"/>
+				<input id="newItemCategory" placeholder="Category" />
+				<button id="newItemSave">Save</button>
+			</div>
+			<div id="main">
+				<div id="itemContainer"></table>
+			</div>
+		</script>
+
+
+	</head>
+	<body>	
+		<div id="listingContainer"></div>
+		<div id="listExpress">
+
+		</div>
+	{{{js}}}
+	<script src="/javascripts/models/item.js"></script>
+	<script src="/javascripts/models/list.js"></script>
+	<script src="/javascripts/collections/items.js"></script>
+	<script src="/javascripts/collections/lists.js"></script>
+	<script src="/javascripts/views/item.js"></script>
+	<script src="/javascripts/views/list.js"></script>
+	<script src="/javascripts/views/user.js"></script>
+	<script src="/javascripts/views/app.js"></script>
+	<script src="/javascripts/list-express.js"></script>
+
+	</body>
+</html>

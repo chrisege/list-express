@@ -15,6 +15,7 @@
 	"lodash": "*",
 	"backbone": "*",
 	"piler": "*",
-	"consolidate": "*"
+	"consolidate": "*",
+	"handlebars": "*"
   }
 }
