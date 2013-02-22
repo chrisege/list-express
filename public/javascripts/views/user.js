@@ -19,8 +19,6 @@ listExpress.UserView = Backbone.View.extend({
 	initialize: function(){
 		this.collection.fetch();
 		this.listenTo(this.collection, 'reset', this.renderAll);
-		//this.collection.on('reset', this.renderAll, this);
-		//this.collection.on('reset', this.renderSelectedList, this);
 		this.subViews = [];
 	},
 	
@@ -32,11 +30,8 @@ listExpress.UserView = Backbone.View.extend({
 		});
 	},
 	
-	
-	
 	getSelectedId: function(){
 		this.selected = this.collection.at(1);
-		//console.log(this.selected.id);
 		return this.selected.id;
 	},
 	
@@ -45,7 +40,6 @@ listExpress.UserView = Backbone.View.extend({
 		selectedID = selectedID.selector;
 		if (this.listView) {
 			this.listView.close();
-			this.listView.remove();
 		}		
 		var tmpl = _.template($("#listDisplayTemplate").html());
 		$("#listExpress").append(tmpl());
@@ -56,8 +50,6 @@ listExpress.UserView = Backbone.View.extend({
 	
 	emptySubViews: function(){
 		_.each(this.subViews, function(subView){
-			// subView.unbind();
-			// subView.remove();
 			subView.close();
 		});
 	},

@@ -13,11 +13,6 @@ listExpress.ListView = Backbone.View.extend({
 		this.listenTo(this.collection, 'add', this.addOne);
 		this.input = $('#newItemForm');
 		this.subviews = []
-
-	},
-		
-	testFunction: function(){
-		console.log('testFunction');
 	},
 	
 	render: function(){
@@ -74,15 +69,12 @@ listExpress.ListView = Backbone.View.extend({
 	
 	
 	renderAll: function(){
-		console.log(this.collection);
 		var that = this;
 		this.$('#itemContainer').html('');
 		_.each(this.collection.models, function(item){
 			that.renderItem(item);
 		}, this);
 	},
-	
-
 	
 	newAttributes: function() {
       return {
@@ -102,6 +94,7 @@ listExpress.ListView = Backbone.View.extend({
 			subview.close();
 		});
 		this.unbind();
+		this.undelegateEvents();
 		this.remove();
 	},
 	

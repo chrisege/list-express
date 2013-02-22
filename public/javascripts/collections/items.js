@@ -13,7 +13,6 @@ var ItemList = Backbone.Collection.extend({
 		if (options) {
 			this.id = options.id || "";			
 		}
-		//this.url = '/api/items';
 	},
 	
 	

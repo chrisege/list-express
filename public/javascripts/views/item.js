@@ -28,6 +28,7 @@ listExpress.ItemView = Backbone.View.extend({
 	
 	close: function(){
 		this.remove();
+		this.undelegateEvents();
 		this.unbind();
 	},
 	
