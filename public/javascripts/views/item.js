@@ -1,7 +1,8 @@
 var listExpress = listExpress || {};
 
 listExpress.ItemView = Backbone.View.extend({
-	tagName: 'tr',
+	tagName: 'div',
+	className: 'row-fluid',
 	template: $("#itemTemplate").html(),
 	
 	events: {

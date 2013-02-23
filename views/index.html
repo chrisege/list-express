@@ -4,16 +4,19 @@
 		<title>{{title}}</title>
 		{{{css}}}
 		<script type="text/template" id="itemTemplate">
-				<td><input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>></td>
-		    	<td><p class="title"><%= title %></p></td>
-				<td><button class="delete">delete</button></td>
+				<div class="span4">					
+					<p class="title">
+						<input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>> 
+						<%= title %>
+					</p>
+				</div>
+				<div class="span2"><button class="delete btn">delete</button></div>
+
 		</script>
 		<script type="text/template" id="headingTemplate">
-		    <table id="<%= category %>">
-				<tr>
-				<td colspan=4><%= category %></td>
-				</tr>
-			</table>
+			<div id="<%= category %>" class="row-fluid">
+				<div class="span12"><h3><%= category %></h3></div>
+			</div>
 		</script>
 		<script type="text/template" id="listingTemplate">
 			<p><a href="#" id="<%= _id %>" class="listLink"><%= title %></a></p>
@@ -23,7 +26,7 @@
 				<p>New item:</p>
 				<input id="newItemTitle" placeholder="Title"/>
 				<input id="newItemCategory" placeholder="Category" />
-				<button id="newItemSave">Save</button>
+				<button id="newItemSave" class="btn">Save</button>
 			</div>
 			<div id="main">
 				<div id="itemContainer"></table>
@@ -32,10 +35,17 @@
 
 
 	</head>
-	<body>	
-		<div id="listingContainer"></div>
-		<div id="listExpress">
-
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="span2">
+					<div id="newListForm"></div>	
+					<div id="listingContainer"></div>
+				</div>
+				<div class="span10">
+					<div id="listExpress"></div>
+				</div>
+			</div>
 		</div>
 	{{{js}}}
 	<script src="/javascripts/models/item.js"></script>

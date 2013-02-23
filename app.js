@@ -24,8 +24,8 @@ app.clientcss = piler.createCSSManager();
 app.configure(function(){
   app.clientjs.bind(app);
   app.clientcss.bind(app);
-
-  app.clientcss.addFile(__dirname + "/public/stylesheets/style.css");
+  //app.clientcss.addFile(__dirname + "/node_modules/twitter-bootstrap/less/bootstrap.less");
+  app.clientcss.addFile(__dirname + "/public/stylesheets/style.less");
   app.clientjs.addFile(__dirname + "/node_modules/zepto/zepto.min.js");
   app.clientjs.addFile(__dirname + "/node_modules/lodash/lodash.js");
   app.clientjs.addFile(__dirname + "/node_modules/backbone/backbone.js"); //switch to min at some point

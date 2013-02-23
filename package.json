@@ -16,6 +16,8 @@
 	"backbone": "*",
 	"piler": "*",
 	"consolidate": "*",
-	"handlebars": "*"
+	"handlebars": "*",
+	"less": "*",
+	"twitter-bootstrap": "*"
   }
 }
