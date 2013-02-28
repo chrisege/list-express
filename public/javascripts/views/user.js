@@ -14,26 +14,35 @@ listExpress.UserView = Backbone.View.extend({
 	template: $("#listingTemplate").html(),
 	events: {
 		'click .listLink': 'renderSelectedList',
+		'click #newListSave': 'create',
 	},
 	
 	initialize: function(){
 		this.collection.fetch();
 		this.listenTo(this.collection, 'reset', this.renderAll);
+		this.listenTo(this.collection, 'add', this.addOne);
 		this.subViews = [];
 	},
 	
 	renderAll: function(){
 		var that = this;
+		this.$el.find('p').remove();
 		this.tmpl = _.template(this.template);
 		_.each(this.collection.models, function(item){
 			that.$el.append(that.tmpl(item.toJSON()));
 		});
 	},
 	
+	addOne: function(item){
+		this.tmpl = _.template(this.template);
+		this.$el.append(this.tmpl(item.toJSON()));
+	},
+	
 	getSelectedId: function(){
 		this.selected = this.collection.at(1);
 		return this.selected.id;
 	},
+	
 	
 	renderSelectedList: function(e){
 		var selectedID = $(e.currentTarget.id);
@@ -54,5 +63,16 @@ listExpress.UserView = Backbone.View.extend({
 		});
 	},
 	
+	create: function(){
+		console.log('create');
+		this.collection.create(this.newAttributes());
+	},
+	
+	newAttributes: function(){
+		return {
+	        title: $('#newListTitle').val().trim(),
+	        completed: false
+	      };
+	},
 
 });
