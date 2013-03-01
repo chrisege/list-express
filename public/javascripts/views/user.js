@@ -40,15 +40,26 @@ listExpress.UserView = Backbone.View.extend({
 	},
 		
 	
-	renderSelectedList: function(id){
+	renderSelectedList: function(model, id){
 		if (this.listView) {
 			this.listView.close();
 		}		
+		
+		//renders a couple divs to the dom so there's a place to
+		//instert the listView. probably not the most effficeint way
+		//to do this, but at the moment I can't find another way.
+		
 		var tmpl = _.template($("#listDisplayTemplate").html());
 		$("#listExpress").append(tmpl());
+		
+		
 		listExpress.itemList.url = "/api/lists/"+id+"/items";
 		listExpress.itemList.fetch()
-		this.listView = new listExpress.ListView([], {id: id});
+		this.listView = new listExpress.ListView({
+								el: "#listExpress #main",
+								model: model,
+								id: id
+							});
 	},
 	
 	emptySubViews: function(){

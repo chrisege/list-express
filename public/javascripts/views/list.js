@@ -1,9 +1,10 @@
 var listExpress = listExpress || {};
 
 listExpress.ListView = Backbone.View.extend({
-	el: "#listExpress div",
-	tagName: 'div',
-	model: listExpress.List,
+	//el: "#listExpress div",
+	
+	//tagName: 'div',
+//	model: listExpress.List,
 	initialize: function(models, options){
 		if (options) {
 			this.id = options.id;
@@ -16,7 +17,9 @@ listExpress.ListView = Backbone.View.extend({
 	},
 	
 	render: function(){
+		console.log('render');
 		var completed = this.collection.completed().length;
+		this.renderListHeading();
 		this.renderAllGrouped();
 	},
 	
@@ -26,7 +29,8 @@ listExpress.ListView = Backbone.View.extend({
 	
 	renderAllGrouped: function(){
 		var that = this;
-		$('#itemContainer').html('');
+		//$('#itemContainer').html('');
+		this.$el.children('#itemContainer').html('');
 		_.each(this.collection.groupByCategory(), function(value, key){
 			that.renderCollectionHeading(value, key);
 			that.renderCollection(value, key);
@@ -36,7 +40,8 @@ listExpress.ListView = Backbone.View.extend({
 	renderCollectionHeading: function(collection, name){
 		var tmpl = _.template($('#headingTemplate').html());
 			tmpl = tmpl({category: name});
-		$('#itemContainer').append(tmpl);
+		//$('#itemContainer').append(tmpl);
+		this.$el.children('#itemContainer').append(tmpl);
 	},
 	
 	renderCollection: function(collection, name){
@@ -50,7 +55,8 @@ listExpress.ListView = Backbone.View.extend({
 		var itemView = new listExpress.ItemView({
 			model:item
 		});
-		this.$('#itemContainer').append(itemView.render().el);
+		//this.$('#itemContainer').append(itemView.render().el);
+		this.$el.append(itemView.render().el);
 	},
 	
 	addOne: function(item){
@@ -70,11 +76,19 @@ listExpress.ListView = Backbone.View.extend({
 	
 	renderAll: function(){
 		var that = this;
-		this.$('#itemContainer').html('');
+		//this.$('#itemContainer').html('');
+		this.$el.html;
 		_.each(this.collection.models, function(item){
 			that.renderItem(item);
 		}, this);
 	},
+	
+	renderListHeading: function(){
+		var tmpl = _.template($('#listHeadingTemplate').html());
+		this.$el.prepend(tmpl(this.model.toJSON()));
+		return this;
+	},
+	
 	
 	newAttributes: function() {
       return {

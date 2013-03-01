@@ -23,13 +23,22 @@
 			<p><a href="#" class="listLink"><%= title %></a></p>
 		</script>
 		
-		<script type="text/template" id="listDisplayTemplate">
-			<div id="newItemForm">
-				<p>New item:</p>
-				<input id="newItemTitle" placeholder="Title"/>
-				<input id="newItemCategory" placeholder="Category" />
-				<button id="newItemSave" class="btn">Save</button>
+		<script type="text/template" id="listHeadingTemplate">
+			<div class="well">
+				<h2><%= title %></h2>
+				<p>Completed: 
+					<input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>> 
+				</p>
+				<div id="newItemForm">
+					<p>New item:</p>
+					<input id="newItemTitle" placeholder="Title"/>
+					<input id="newItemCategory" placeholder="Category" />
+					<button id="newItemSave" class="btn">Save</button>
+				</div>
 			</div>
+		</script>
+		
+		<script type="text/template" id="listDisplayTemplate">
 			<div id="main">
 				<div id="itemContainer"></table>
 			</div>
@@ -53,7 +62,9 @@
 					</div>
 				</div>
 				<div class="span10">
-					<div id="listExpress"></div>
+					<div id="listExpress">
+
+					</div>
 				</div>
 			</div>
 		</div>

@@ -14,7 +14,7 @@ listExpress.ListTitleView = Backbone.View.extend({
 	},
 	
 	selectList: function(){
-		this.model.parentView.renderSelectedList(this.model.id);
+		this.model.parentView.renderSelectedList(this.model, this.model.id);
 	},
 	
 });
