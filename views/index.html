@@ -11,16 +11,18 @@
 					</p>
 				</div>
 				<div class="span2"><button class="delete btn">delete</button></div>
-
 		</script>
+		
 		<script type="text/template" id="headingTemplate">
 			<div id="<%= category %>" class="row-fluid">
 				<div class="span12"><h3><%= category %></h3></div>
 			</div>
 		</script>
-		<script type="text/template" id="listingTemplate">
-			<p><a href="#" id="<%= _id %>" class="listLink"><%= title %></a></p>
+		
+		<script type="text/template" id="listTitleTemplate">
+			<p><a href="#" class="listLink"><%= title %></a></p>
 		</script>
+		
 		<script type="text/template" id="listDisplayTemplate">
 			<div id="newItemForm">
 				<p>New item:</p>
@@ -61,6 +63,7 @@
 	<script src="/javascripts/collections/items.js"></script>
 	<script src="/javascripts/collections/lists.js"></script>
 	<script src="/javascripts/views/item.js"></script>
+	<script src="/javascripts/views/listTitle.js"></script>
 	<script src="/javascripts/views/list.js"></script>
 	<script src="/javascripts/views/user.js"></script>
 	<script src="/javascripts/views/app.js"></script>

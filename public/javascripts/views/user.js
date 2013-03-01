@@ -11,9 +11,9 @@ listExpress.UserView = Backbone.View.extend({
 	// change this to pull a given user's lists
 	// once users are built.
 	collection: listExpress.Lists,
-	template: $("#listingTemplate").html(),
+	template: $("#listTitleTemplate").html(),
 	events: {
-		'click .listLink': 'renderSelectedList',
+		// 'click .listLink': 'renderSelectedList',
 		'click #newListSave': 'create',
 	},
 	
@@ -26,35 +26,29 @@ listExpress.UserView = Backbone.View.extend({
 	
 	renderAll: function(){
 		var that = this;
-		this.$el.find('p').remove();
-		this.tmpl = _.template(this.template);
-		_.each(this.collection.models, function(item){
-			that.$el.append(that.tmpl(item.toJSON()));
+		_.each(this.collection.models, function(listTitle){
+			that.addOne(listTitle);
 		});
 	},
 	
 	addOne: function(item){
-		this.tmpl = _.template(this.template);
-		this.$el.append(this.tmpl(item.toJSON()));
+		item.parentView = this;
+		var listTitleView = new listExpress.ListTitleView({
+			model:item
+		});
+		this.$el.append(listTitleView.render().el);
 	},
+		
 	
-	getSelectedId: function(){
-		this.selected = this.collection.at(1);
-		return this.selected.id;
-	},
-	
-	
-	renderSelectedList: function(e){
-		var selectedID = $(e.currentTarget.id);
-		selectedID = selectedID.selector;
+	renderSelectedList: function(id){
 		if (this.listView) {
 			this.listView.close();
 		}		
 		var tmpl = _.template($("#listDisplayTemplate").html());
 		$("#listExpress").append(tmpl());
-		listExpress.itemList.url = "/api/lists/"+selectedID+"/items";
+		listExpress.itemList.url = "/api/lists/"+id+"/items";
 		listExpress.itemList.fetch()
-		this.listView = new listExpress.ListView([], {id: selectedID});
+		this.listView = new listExpress.ListView([], {id: id});
 	},
 	
 	emptySubViews: function(){
@@ -64,7 +58,6 @@ listExpress.UserView = Backbone.View.extend({
 	},
 	
 	create: function(){
-		console.log('create');
 		this.collection.create(this.newAttributes());
 	},
 	
